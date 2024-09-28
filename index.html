@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bail Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bail Prediction</h1>
+    <form id="bailForm">
+        <label>Offense Type:</label>
+        <input type="text" id="offense_type" name="offense_type" required><br>
+
+        <label>IPC Section:</label>
+        <input type="text" id="ipc_section" name="ipc_section" required><br>
+
+        <label>Time Served (in months):</label>
+        <input type="number" id="time_served" name="time_served" required><br>
+
+        <label>Bailable Offense (0 or 1):</label>
+        <input type="number" id="bailable_offense" name="bailable_offense" required><br>
+
+        <label>Flight Risk (1-10):</label>
+        <input type="number" id="flight_risk" name="flight_risk" required><br>
+
+        <label>Judicial Discretion (1-10):</label>
+        <input type="number" id="judicial_discretion" name="judicial_discretion" required><br>
+
+        <label>Influence on Witness (1-10):</label>
+        <input type="number" id="influence_on_witness" name="influence_on_witness" required><br>
+
+        <label>Previous Criminal Record (0 or 1):</label>
+        <input type="number" id="previous_criminal_record" name="previous_criminal_record" required><br>
+
+        <label>Case Date:</label>
+        <input type="date" id="case_date" name="case_date" required><br>
+
+        <button type="submit">Predict Bail</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+        document.getElementById('bailForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = {
+                offense_type: document.getElementById('offense_type').value,
+                time_served: parseInt(document.getElementById('time_served').value),
+                flight_risk: parseInt(document.getElementById('flight_risk').value),
+                judicial_discretion: parseInt(document.getElementById('judicial_discretion').value),
+                bailable_offense: parseInt(document.getElementById('bailable_offense').value),
+                influence_on_witness: parseInt(document.getElementById('influence_on_witness').value),
+                case_date: document.getElementById('case_date').value
+            };
+
+            fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                document,getElementById('bailForm').addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    const formData = {
+                        offense_type: document.getElementById('offense_type').value,
+                        time_served: parseInt(document.getElementById('time_served').value),
+                        flight_risk: parseInt(document.getElementById('flight_risk').value),
+                        judicial_discretion: parseInt(document.getElementById('judicial_discretion').value),
+                        bailable_offense: parseInt(document.getElementById('bailable_offense').value),
+                        influence_on_witness: parseInt(document.getElementById('influence_on_witness').value),
+                        case_date: document.getElementById('case_date').value
+                    };
+
+                    fetch('http://127.0.0.1:5000/predict/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const result = data.bail_granted === 1 ? "Bail Granted" : "Bail Denied";
+                            document.getElementById('result').innerText = result;
+                        })
+                        .catch(error => {
+                            document.getElementById('result').innerText = 'Error in prediction';
+                            console.error('Error:', error);
+                        });
+                }),
+
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const result = data.bail_granted === 1 ? "Bail Granted" : "Bail Denied";
+                    document.getElementById('result').innerText = result;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerText = 'Error in prediction';
+                    console.error('Error:', error);
+                });
+            });
+
+    </script>
+</body>
+
+</html>
