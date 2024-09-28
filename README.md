@@ -1,4 +1,4 @@
-## Bail Rockner
+## Bail Rocknor
 
 Bail Reckoner is a digital solution designed to streamline the bail process for undertrial prisoners, legal aid providers, and judicial authorities. The project was developed as part of Smart India Hackathon (SIH) 2024 with the goal of providing an easy-to-use platform that integrates various legal parameters to assess bail eligibility.
 
